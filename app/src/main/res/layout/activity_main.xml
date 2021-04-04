@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created by Bereketab Gulai | s1827985 -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.MainActivity">
+
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.bgulai_gcu.earthquaketracker.activities.MapsFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/locationRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_maps" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/locationRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sortFloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/sort"
+        android:src="@drawable/ic_sort_black_24dp"
+        app:tint="@null"
+        app:fabCustomSize="52dp"
+        app:layout_constraintBottom_toBottomOf="@+id/locationRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filterFloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:clickable="true"
+        android:contentDescription="@string/filter"
+        android:src="@drawable/ic_filter_list_black_24dp"
+        app:tint="@null"
+        app:fabCustomSize="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sortFloatingActionButton" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/filterSortCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="10"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:cardBackgroundColor="@color/black_overlay"
+        app:cardElevation="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sortConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1000dp"
+            android:visibility="invisible"
+            tools:visibility="invisible">
+
+            <TextView
+                android:id="@+id/sortTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                android:text="@string/sort_by"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/sortRG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sortTextView">
+
+                <RadioButton
+                    android:id="@+id/sortByMagnitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:text="@string/magnitude" />
+
+                <RadioButton
+                    android:id="@+id/sortByDepth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:text="@string/depth" />
+
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filterConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1000dp"
+            android:visibility="invisible"
+            tools:visibility="invisible">
+
+            <TextView
+                android:id="@+id/filterTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                android:text="@string/filter_by"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/filterTextView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/filterContainerConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/fromEditTextDate"
+                        android:layout_width="170dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:hint="@string/from_date"
+                        android:importantForAutofill="no"
+                        android:inputType="date"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/toTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="#514747"
+                        android:gravity="center"
+                        android:text="@string/to"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@+id/fromEditTextDate2"
+                        app:layout_constraintStart_toEndOf="@+id/fromEditTextDate"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/fromEditTextDate2"
+                        android:layout_width="170dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:ems="10"
+                        android:hint="@string/to_date"
+                        android:importantForAutofill="no"
+                        android:inputType="date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/magnitudeSelectionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/magnitude"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fromEditTextDate" />
+
+                    <Spinner
+                        android:id="@+id/magSpinner"
+                        android:layout_width="170dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/magnitudeSelectionTextView" />
+
+                    <TextView
+                        android:id="@+id/depthSelectionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="158dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/depth"
+                        app:layout_constraintStart_toEndOf="@+id/magnitudeSelectionTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/fromEditTextDate2" />
+
+                    <Spinner
+                        android:id="@+id/depthSpinner"
+                        android:layout_width="170dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginTop="8dp"
+                        android:elevation="2dp"
+                        app:layout_constraintStart_toEndOf="@+id/magSpinner"
+                        app:layout_constraintTop_toBottomOf="@+id/depthSelectionTextView" />
+
+                    <TextView
+                        android:id="@+id/locationSelectionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/location"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/magSpinner" />
+
+                    <Spinner
+                        android:id="@+id/locationSpinner"
+                        android:layout_width="170dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:elevation="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/locationSelectionTextView" />
+
+                    <Button
+                        android:id="@+id/filterApplyButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/apply"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/depthSpinner" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
