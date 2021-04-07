@@ -60,6 +60,8 @@ public class LocationCardAdapter extends RecyclerView.Adapter<LocationCardAdapte
         LocationHolder(View locationCardView) {
             super(locationCardView);
 
+//            locationCardView.addli
+
             locationViewContext = locationCardView.getContext();
 
             location = locationCardView.findViewById(R.id.locationTextView);

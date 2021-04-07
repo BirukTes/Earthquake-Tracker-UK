@@ -1,0 +1,97 @@
+@startuml
+class com.bgulai_gcu.earthquaketracker.activities.MainActivity {
+- TextView mTextView
+- RecyclerView recyclerView
+- LocationCardAdapter locationCardAdapter
+- ArrayList<LocationModel> locationModelList
+- CardView filterSortCardView
+- ConstraintLayout sortConstraintLayout
+- ConstraintLayout filterConstraintLayout
+- FloatingActionButton sortFloatingActionButton
+- FloatingActionButton filterFloatingActionButton
+- Button filterApplyButton
+- RadioGroup sortRG
+# void onCreate(Bundle)
+- void initialiseRecyclerViewValues(ArrayList<LocationModel>)
+}
+class com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData {
+# ArrayList<LocationModel> doInBackground(String)
+# void onPostExecute(ArrayList<LocationModel>)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter {
+- Context context
+- ArrayList<LocationModel> locationModelList
++ LocationHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(LocationHolder,int)
++ int getItemCount()
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder {
+- TextView location
+- Context locationViewContext
+~ void setDetails(LocationModel)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationXmlParser {
+- {static} String ns
++ ArrayList<LocationModel> parse(InputStream)
+- ArrayList<LocationModel> readFeed(XmlPullParser)
+- LocationModel readItem(XmlPullParser)
+- String[] readDescription(XmlPullParser)
+- String readLink(XmlPullParser)
+- String readDate(XmlPullParser)
+- String readLatitude(XmlPullParser)
+- String readLongitude(XmlPullParser)
+- String readText(XmlPullParser)
+- void skip(XmlPullParser)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationModel {
+- String location
+- String dateTime
+- String magnitude
+- String depth
+- String link
+- String geoLatitude
+- String geoLongitude
++ int magnitudeColour(double)
++ String getLocation()
++ void setLocation(String)
++ String getDateTime()
++ void setDateTime(String)
++ String getMagnitude()
++ void setMagnitude(String)
++ String getDepth()
++ void setDepth(String)
++ String getLink()
++ void setLink(String)
++ String getGeoLatitude()
++ void setGeoLatitude(String)
++ String getGeoLongitude()
++ void setGeoLongitude(String)
+}
+class com.bgulai_gcu.earthquaketracker.activities.MapsFragment {
+- OnMapReadyCallback callback
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
+}
+class com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity {
+- {static} int SPLASH_SCREEN
+~ ImageView imageView
+~ TextView textViewTitle
+~ Animation top
+~ Animation bottom
+# void onCreate(Bundle)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LoadXmlFromNetwork {
++ ArrayList<LocationModel> loadXml(String)
+- InputStream downloadUrl(String)
+}
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity
+com.bgulai_gcu.earthquaketracker.activities.MainActivity +.. com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData
+com.bgulai_gcu.earthquaketracker.activities.AsyncTask <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData
+com.bgulai_gcu.earthquaketracker.generalClasses.Adapter <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter
+com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter +.. com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
+com.bgulai_gcu.earthquaketracker.generalClasses.ViewHolder <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
+androidx.fragment.app.Fragment <|-- com.bgulai_gcu.earthquaketracker.activities.MapsFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity
+@enduml

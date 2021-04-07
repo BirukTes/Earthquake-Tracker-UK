@@ -37,7 +37,6 @@
         android:clickable="true"
         android:contentDescription="@string/sort"
         android:src="@drawable/ic_sort_black_24dp"
-        app:tint="@null"
         app:fabCustomSize="52dp"
         app:layout_constraintBottom_toBottomOf="@+id/locationRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.83"
+        app:tint="@null"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -55,13 +55,13 @@
         android:clickable="true"
         android:contentDescription="@string/filter"
         android:src="@drawable/ic_filter_list_black_24dp"
-        app:tint="@null"
         app:fabCustomSize="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sortFloatingActionButton" />
+        app:layout_constraintTop_toBottomOf="@+id/sortFloatingActionButton"
+        app:tint="@null" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/filterSortCardView"
