@@ -1,0 +1,41 @@
+@startuml
+class com.bgulai_gcu.earthquaketracker.activities.MainActivity {
+- TextView mTextView
+- RecyclerView recyclerView
+- LocationCardAdapter locationCardAdapter
+- ArrayList<LocationModel> locationModelList
+- CardView filterSortCardView
+- ConstraintLayout sortConstraintLayout
+- ConstraintLayout filterConstraintLayout
+- FloatingActionButton sortFloatingActionButton
+- FloatingActionButton filterFloatingActionButton
+- Button filterApplyButton
+- RadioGroup sortRG
+# void onCreate(Bundle)
+- void initialiseRecyclerViewValues(ArrayList<LocationModel>)
+}
+class com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData {
+# ArrayList<LocationModel> doInBackground(String)
+# void onPostExecute(ArrayList<LocationModel>)
+}
+class com.bgulai_gcu.earthquaketracker.activities.MapsFragment {
+- OnMapReadyCallback callback
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
+}
+class com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity {
+- {static} int SPLASH_SCREEN
+~ ImageView imageView
+~ TextView textViewTitle
+~ Animation top
+~ Animation bottom
+# void onCreate(Bundle)
+}
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity
+com.bgulai_gcu.earthquaketracker.activities.MainActivity +.. com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData
+com.bgulai_gcu.earthquaketracker.activities.AsyncTask <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData
+androidx.fragment.app.Fragment <|-- com.bgulai_gcu.earthquaketracker.activities.MapsFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter {
+- Context context
+- ArrayList<LocationModel> locationModelList
++ LocationHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(LocationHolder,int)
++ int getItemCount()
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder {
+- TextView location
+- Context locationViewContext
+~ void setDetails(LocationModel)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationXmlParser {
+- {static} String ns
++ ArrayList<LocationModel> parse(InputStream)
+- ArrayList<LocationModel> readFeed(XmlPullParser)
+- LocationModel readItem(XmlPullParser)
+- String[] readDescription(XmlPullParser)
+- String readLink(XmlPullParser)
+- String readDate(XmlPullParser)
+- String readLatitude(XmlPullParser)
+- String readLongitude(XmlPullParser)
+- String readText(XmlPullParser)
+- void skip(XmlPullParser)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LocationModel {
+- String location
+- String dateTime
+- String magnitude
+- String depth
+- String link
+- String geoLatitude
+- String geoLongitude
++ int magnitudeColour(double)
++ String getLocation()
++ void setLocation(String)
++ String getDateTime()
++ void setDateTime(String)
++ String getMagnitude()
++ void setMagnitude(String)
++ String getDepth()
++ void setDepth(String)
++ String getLink()
++ void setLink(String)
++ String getGeoLatitude()
++ void setGeoLatitude(String)
++ String getGeoLongitude()
++ void setGeoLongitude(String)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.LoadXmlFromNetwork {
++ ArrayList<LocationModel> loadXml(String)
+- InputStream downloadUrl(String)
+}
+
+
+com.bgulai_gcu.earthquaketracker.generalClasses.Adapter <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter
+com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter +.. com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
+com.bgulai_gcu.earthquaketracker.generalClasses.ViewHolder <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
+@enduml

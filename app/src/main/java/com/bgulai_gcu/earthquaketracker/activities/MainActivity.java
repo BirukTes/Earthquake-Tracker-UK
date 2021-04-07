@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final String quakesBgsUrlSource = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
+        final String quakesBgsUrlSource = "https://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
 
         mTextView = findViewById(R.id.text);
 
@@ -123,21 +123,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         filterApplyButton = findViewById(R.id.filterApplyButton);
-        filterApplyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filterConstraintLayout.animate()
-                        .translationY(-filterConstraintLayout.getHeight())
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                filterConstraintLayout.animate().setListener(null);
-                                filterSortCardView.setVisibility(View.GONE);
-                                filterConstraintLayout.setVisibility(View.GONE);
-                            }
-                        });
-            }
-        });
+        filterApplyButton.setOnClickListener(view -> filterConstraintLayout.animate()
+                .translationY(-filterConstraintLayout.getHeight())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        filterConstraintLayout.animate().setListener(null);
+                        filterSortCardView.setVisibility(View.GONE);
+                        filterConstraintLayout.setVisibility(View.GONE);
+                    }
+                }));
     }
 
     private void initialiseRecyclerViewValues(ArrayList<LocationModel> locationModelList) {

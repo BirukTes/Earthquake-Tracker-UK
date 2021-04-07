@@ -1,12 +1,17 @@
 package com.bgulai_gcu.earthquaketracker.generalClasses;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -55,14 +60,16 @@ public class LocationCardAdapter extends RecyclerView.Adapter<LocationCardAdapte
 
     class LocationHolder extends RecyclerView.ViewHolder {
         private TextView location, dateTime, magnitude, depth, colourBackgroundTextView;
-        private Context locationViewContext;
 
         LocationHolder(View locationCardView) {
             super(locationCardView);
 
-//            locationCardView.addli
-
-            locationViewContext = locationCardView.getContext();
+            locationCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialog();
+                }
+            });
 
             location = locationCardView.findViewById(R.id.locationTextView);
             dateTime = locationCardView.findViewById(R.id.dateTimeTextView);
@@ -79,9 +86,58 @@ public class LocationCardAdapter extends RecyclerView.Adapter<LocationCardAdapte
 
             try {
                 int magColourId = locationModel.magnitudeColour(Double.valueOf(locationModel.getMagnitude().trim()));
-                colourBackgroundTextView.setBackgroundColor(ContextCompat.getColor(locationViewContext, magColourId));
+                colourBackgroundTextView.setBackgroundColor(ContextCompat.getColor(context, magColourId));
             } catch (Exception e) {
                 Log.e("______________________________________________ back colour ______________________________________________", e.getMessage());
+            }
+        }
+
+        private void showDialog() {
+            // Custom dialog setup
+            final Dialog dialog = new Dialog(context);
+
+            dialog.setContentView(R.layout.location_card_dialog);
+            dialog.setTitle("Options");
+
+            Button dialogOKButton = dialog.findViewById(R.id.dialogOKButton);
+            Button dialogCancelButton = dialog.findViewById(R.id.dialogCancelButton);
+
+            dialogOKButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    showLocationDetails();
+                }
+            });
+
+            dialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+
+
+        private void showLocationDetails() {
+            LocationModel locationModel = locationModelList.get(getAdapterPosition());
+
+            /**
+             * Open a web page of a specified URL
+             *
+             * @param url URL to open
+             */
+            try {
+                String link = locationModel.getLink().replace("http", "https");
+
+                Uri webpage = Uri.parse(link);
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+                context.startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
