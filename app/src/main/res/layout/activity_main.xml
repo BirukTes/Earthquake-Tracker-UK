@@ -109,6 +109,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/sortTextView">
 
                 <RadioButton
+                    android:id="@+id/sortByNone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:text="None" />
+
+                <RadioButton
                     android:id="@+id/sortByMagnitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -160,8 +167,20 @@
 
                     >
 
-                    <EditText
-                        android:id="@+id/fromEditTextDate"
+                    <TextView
+                        android:id="@+id/DateRangeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Date Range"
+                        android:textAllCaps="false"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/fromDateTextButton"
+                        style="@style/Widget.AppCompat.Spinner"
                         android:layout_width="170dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
@@ -169,36 +188,34 @@
                         android:ems="10"
                         android:hint="@string/from_date"
                         android:importantForAutofill="no"
-                        android:inputType="date"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/DateRangeTextView" />
 
                     <TextView
                         android:id="@+id/toTextView"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:backgroundTint="#514747"
                         android:gravity="center"
                         android:text="@string/to"
                         android:textAlignment="center"
                         android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@+id/fromEditTextDate2"
-                        app:layout_constraintStart_toEndOf="@+id/fromEditTextDate"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toStartOf="@+id/toDateTextButton"
+                        app:layout_constraintStart_toEndOf="@+id/fromDateTextButton"
+                        app:layout_constraintTop_toBottomOf="@+id/DateRangeTextView" />
 
-                    <EditText
-                        android:id="@+id/fromEditTextDate2"
+                    <Button
+                        android:id="@+id/toDateTextButton"
+                        style="@style/Widget.AppCompat.Spinner"
                         android:layout_width="170dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:ems="10"
                         android:hint="@string/to_date"
-                        android:importantForAutofill="no"
-                        android:inputType="date"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/DateRangeTextView" />
 
                     <TextView
                         android:id="@+id/magnitudeSelectionTextView"
@@ -208,7 +225,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/magnitude"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fromEditTextDate" />
+                        app:layout_constraintTop_toBottomOf="@+id/fromDateTextButton" />
 
                     <Spinner
                         android:id="@+id/magSpinner"
@@ -227,7 +244,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/depth"
                         app:layout_constraintStart_toEndOf="@+id/magnitudeSelectionTextView"
-                        app:layout_constraintTop_toBottomOf="@+id/fromEditTextDate2" />
+                        app:layout_constraintTop_toBottomOf="@+id/toDateTextButton" />
 
                     <Spinner
                         android:id="@+id/depthSpinner"
@@ -270,6 +287,17 @@
                         android:text="@string/apply"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/depthSpinner" />
+
+                    <Button
+                        android:id="@+id/filterCancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="Clear"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/filterApplyButton"
                         app:layout_constraintTop_toBottomOf="@+id/depthSpinner" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import com.bgulai_gcu.earthquaketracker.R;
 
 import java.sql.Struct;
+import java.util.Comparator;
 
 /**
  * Created by Bereketab Gulai | s1827985
@@ -21,6 +22,23 @@ public class LocationModel {
     private String geoLatitude;
     private String geoLongitude;
 
+    public static Comparator<LocationModel> magnitudeComparator = new Comparator<LocationModel>() {
+        @Override
+        public int compare(LocationModel o1, LocationModel o2) {
+            Double o1Mag = Double.parseDouble(o1.getMagnitude());
+            Double o2Mag = Double.parseDouble(o2.getMagnitude());
+            return o1Mag.compareTo(o2Mag);
+        }
+    };
+    public static Comparator<LocationModel> depthComparator = new Comparator<LocationModel>() {
+        @Override
+        public int compare(LocationModel o1, LocationModel o2) {
+            Double o1Depth = Double.parseDouble(o1.getDepth().replace(" km", ""));
+            Double o2Depth = Double.parseDouble(o2.getDepth().replace(" km", ""));
+
+            return o1Depth.compareTo(o2Depth);
+        }
+    };
 
     public LocationModel(String location, String dateTime, String magnitude, String depth, String link, String geoLatitude, String geoLongitude) {
         this.location = location;
