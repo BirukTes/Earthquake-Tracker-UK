@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,13 +80,19 @@ public class LocationCardAdapter extends RecyclerView.Adapter<LocationCardAdapte
         }
 
         void setDetails(LocationModel locationModel) {
-            location.setText(locationModel.getLocation().trim());
-            dateTime.setText(locationModel.getDateTime().trim());
-            magnitude.setText(locationModel.getMagnitude().trim());
-            depth.setText(locationModel.getDepth().trim());
+            location.setText(locationModel.getLocation());
+            SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+            try {
+                String date = format.format(locationModel.getDateTime());
+                dateTime.setText(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            magnitude.setText(String.valueOf(locationModel.getMagnitude()));
+            depth.setText(String.valueOf(locationModel.getDepth()) + " km");
 
             try {
-                int magColourId = locationModel.magnitudeColour(Double.valueOf(locationModel.getMagnitude().trim()));
+                int magColourId = locationModel.magnitudeColour(locationModel.getMagnitude());
                 colourBackgroundTextView.setBackgroundColor(ContextCompat.getColor(context, magColourId));
             } catch (Exception e) {
                 Log.e("______________________________________________ back colour ______________________________________________", e.getMessage());

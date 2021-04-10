@@ -1,46 +1,58 @@
 package com.bgulai_gcu.earthquaketracker.generalClasses;
 
 
+import android.icu.text.SimpleDateFormat;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.bgulai_gcu.earthquaketracker.R;
 
 import java.sql.Struct;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterItem;
 
 /**
  * Created by Bereketab Gulai | s1827985
  */
-public class LocationModel {
+public class LocationModel implements ClusterItem {
 
     // Model Class
     private String location;
-    private String dateTime;
-    private String magnitude;
-    private String depth;
+    private Date dateTime;
+    private double magnitude;
+    private double depth;
     private String link;
-    private String geoLatitude;
-    private String geoLongitude;
+    private double geoLatitude;
+    private double geoLongitude;
+    private String title;
+    private String snippet;
+    private LatLng position;
 
     public static Comparator<LocationModel> magnitudeComparator = new Comparator<LocationModel>() {
         @Override
         public int compare(LocationModel o1, LocationModel o2) {
-            Double o1Mag = Double.parseDouble(o1.getMagnitude());
-            Double o2Mag = Double.parseDouble(o2.getMagnitude());
+            Double o1Mag = o1.getMagnitude();
+            Double o2Mag = o2.getMagnitude();
             return o1Mag.compareTo(o2Mag);
         }
     };
     public static Comparator<LocationModel> depthComparator = new Comparator<LocationModel>() {
         @Override
         public int compare(LocationModel o1, LocationModel o2) {
-            Double o1Depth = Double.parseDouble(o1.getDepth().replace(" km", ""));
-            Double o2Depth = Double.parseDouble(o2.getDepth().replace(" km", ""));
+            Double o1Depth = o1.getDepth();
+            Double o2Depth = o2.getDepth();
 
             return o1Depth.compareTo(o2Depth);
         }
     };
 
-    public LocationModel(String location, String dateTime, String magnitude, String depth, String link, String geoLatitude, String geoLongitude) {
+    public LocationModel(String location, Date dateTime, double magnitude, double depth, String link, double geoLatitude, double geoLongitude) {
         this.location = location;
         this.dateTime = dateTime;
         this.magnitude = magnitude;
@@ -48,8 +60,11 @@ public class LocationModel {
         this.link = link;
         this.geoLatitude = geoLatitude;
         this.geoLongitude = geoLongitude;
-    }
 
+        this.title = location;
+        this.snippet = "Magnitude: " + String.valueOf(magnitude) + " | Date: " + (new SimpleDateFormat("dd/MM/yy HH:mm")).format(dateTime);
+        this.position = new LatLng(geoLatitude, geoLongitude);
+    }
 
     public int magnitudeColour(double magnitude) {
         int colorCode = 0;
@@ -85,7 +100,6 @@ public class LocationModel {
         return colorCode;
     }
 
-
     public String getLocation() {
         return location;
     }
@@ -94,27 +108,27 @@ public class LocationModel {
         this.location = location;
     }
 
-    public String getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
-    public String getMagnitude() {
+    public double getMagnitude() {
         return magnitude;
     }
 
-    public void setMagnitude(String magnitude) {
+    public void setMagnitude(double magnitude) {
         this.magnitude = magnitude;
     }
 
-    public String getDepth() {
+    public double getDepth() {
         return depth;
     }
 
-    public void setDepth(String depth) {
+    public void setDepth(double depth) {
         this.depth = depth;
     }
 
@@ -126,19 +140,53 @@ public class LocationModel {
         this.link = link;
     }
 
-    public String getGeoLatitude() {
+    public double getGeoLatitude() {
         return geoLatitude;
     }
 
-    public void setGeoLatitude(String geoLatitude) {
+    public void setGeoLatitude(double geoLatitude) {
         this.geoLatitude = geoLatitude;
     }
 
-    public String getGeoLongitude() {
+    public double getGeoLongitude() {
         return geoLongitude;
     }
 
-    public void setGeoLongitude(String geoLongitude) {
+    public void setGeoLongitude(double geoLongitude) {
         this.geoLongitude = geoLongitude;
+    }
+
+    public static Comparator<LocationModel> getMagnitudeComparator() {
+        return magnitudeComparator;
+    }
+
+    public static void setMagnitudeComparator(Comparator<LocationModel> magnitudeComparator) {
+        LocationModel.magnitudeComparator = magnitudeComparator;
+    }
+
+    public static Comparator<LocationModel> getDepthComparator() {
+        return depthComparator;
+    }
+
+    public static void setDepthComparator(Comparator<LocationModel> depthComparator) {
+        LocationModel.depthComparator = depthComparator;
+    }
+
+    @NonNull
+    @Override
+    public LatLng getPosition() {
+        return position;
+    }
+
+    @Nullable
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Nullable
+    @Override
+    public String getSnippet() {
+        return snippet;
     }
 }

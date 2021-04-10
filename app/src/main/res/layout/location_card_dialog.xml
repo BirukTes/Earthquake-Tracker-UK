@@ -3,49 +3,51 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/dialogInfo"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_width="300dp"
+	android:layout_height="wrap_content">
 
 	<TextView
 		android:id="@+id/infoView"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="16dp"
+		android:layout_marginTop="8dp"
 		android:layout_marginEnd="16dp"
 		android:gravity="center"
 		android:text="Would you like to view the details of the event in your browser?"
 		android:textAlignment="center"
 		android:textSize="18sp"
-		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_bias="0.110000014" />
-
-	<Button
-		android:id="@+id/dialogOKButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="8dp"
-		android:text=" Ok "
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/dialogCancelButton"
-		app:layout_constraintHorizontal_bias="0.77"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/infoView"
-		app:layout_constraintVertical_bias="0.17000002" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<Button
 		android:id="@+id/dialogCancelButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="24dp"
+		android:layout_marginStart="32dp"
+		android:layout_marginTop="16dp"
 		android:layout_marginBottom="8dp"
 		android:text="Cancel"
 		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/infoView"
+		app:layout_constraintVertical_bias="0.17000002" />
+
+	<Button
+		android:id="@+id/dialogOKButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="32dp"
+		android:layout_marginBottom="8dp"
+		android:text=" Ok "
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/infoView"
-		app:layout_constraintVertical_bias="0.17000002" />"
+		app:layout_constraintVertical_bias="0.17000002" />
+
+	"
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

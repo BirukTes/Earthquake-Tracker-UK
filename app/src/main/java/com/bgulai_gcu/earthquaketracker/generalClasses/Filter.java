@@ -6,7 +6,7 @@ public class Filter {
     public static Integer INDEX_DATE = 0;
     public static Integer INDEX_MAGNITUDE = 1;
     public static Integer INDEX_DEPTH = 2;
-    public static Integer INDEX_LOCATION = 2;
+    public static Integer INDEX_LOCATION = 3;
 
     private String name;
     private List<String> values;

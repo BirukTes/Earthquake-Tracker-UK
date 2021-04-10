@@ -7,7 +7,10 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,40 +71,48 @@ public class LocationXmlParser {
     private LocationModel readItem(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "item");
         String location = null;
-        String dateTime = null;
-        String magnitude = null;
-        String depth = null;
+        Date dateTime = null;
+        double magnitude = 0;
+        double depth = 0;
         String link = null;
-        String geoLatitude = null;
-        String geoLongitude = null;
+        double geoLatitude = 0;
+        double geoLongitude = 0;
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "description":
-                    String[] description = readDescription(parser);
-                    location = description[0];
-                    depth = description[1];
-                    magnitude = description[2];
-                    break;
-                case "pubDate":
-                    dateTime = readDate(parser);
-                    break;
-                case "link":
-                    link = readLink(parser);
-                    break;
-                case "lat":
-                    geoLatitude = readLatitude(parser);
-                    break;
-                case "long":
-                    geoLongitude = readLongitude(parser);
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            try {
+                switch (name) {
+                    case "description":
+                        String[] description = readDescription(parser);
+                        location = description[0];
+                        depth = Double.parseDouble(description[1].replace(" km", ""));
+                        magnitude = Double.parseDouble(description[2]);
+                        break;
+                    case "pubDate":
+                        dateTime = readDate(parser);
+                        break;
+                    case "link":
+                        link = readLink(parser);
+                        break;
+                    case "geo:lat":
+                        geoLatitude = readLatitude(parser);
+                        break;
+                    case "geo:long":
+                        geoLongitude = readLongitude(parser);
+                        break;
+                    default:
+                        skip(parser);
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         }
         return new LocationModel(location, dateTime, magnitude, depth, link, geoLatitude, geoLongitude);
@@ -111,9 +122,9 @@ public class LocationXmlParser {
     private String[] readDescription(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "description");
         String[] description = readText(parser).split(";");
-        String location = description[1].split(":")[1];
-        String depth = description[3].split(":")[1];
-        String magnitude = description[4].split(":")[1];
+        String location = description[1].split(":")[1].trim();
+        String depth = description[3].split(":")[1].trim();
+        String magnitude = description[4].split(":")[1].trim();
 
         parser.require(XmlPullParser.END_TAG, ns, "description");
         return new String[]{location, depth, magnitude};
@@ -123,31 +134,40 @@ public class LocationXmlParser {
     private String readLink(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "link");
         String link = readText(parser);
+
         parser.require(XmlPullParser.END_TAG, ns, "link");
         return link;
     }
 
     // Processes pubDate tags in the feed.
-    private String readDate(XmlPullParser parser) throws IOException, XmlPullParserException {
+    private Date readDate(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "pubDate");
-        String dateTime = readText(parser);
+        String myStrDate = readText(parser).trim();
+        Date dateTime =  null;
+        SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss");
+        try {
+            dateTime = format.parse(myStrDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         parser.require(XmlPullParser.END_TAG, ns, "pubDate");
         return dateTime;
     }
 
     // Processes geo:lat tags in the feed.
-    private String readLatitude(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "lat");
-        String latitude = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "lat");
+    private double readLatitude(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "geo:lat");
+        double latitude = Double.parseDouble(readText(parser));
+        parser.require(XmlPullParser.END_TAG, ns, "geo:lat");
         return latitude;
     }
 
     // Processes geo:long tags in the feed.
-    private String readLongitude(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "long");
-        String longitude = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "long");
+    private double readLongitude(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "geo:long");
+        double longitude = Double.parseDouble(readText(parser));
+        parser.require(XmlPullParser.END_TAG, ns, "geo:long");
         return longitude;
     }
 

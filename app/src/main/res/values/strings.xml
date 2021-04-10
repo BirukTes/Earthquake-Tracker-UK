@@ -9,9 +9,8 @@
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
     -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="depth">Depth</string>
     <string name="magnitude">Magnitude</string>
+    <string name="depth">Depth</string>
     <string name="sort_by">SORT BY</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
@@ -21,4 +20,30 @@
     <string name="apply">Apply</string>
     <string name="to_date">To Date</string>
     <string name="to">to</string>
+    <string name="none">None</string>
+    <string name="date_range">Date Range</string>
+    <string name="clear">Clear</string>
+    <string name="magnitude_asc">Magnitude (Asc)</string>
+    <string name="depth_asc">Depth (Asc)</string>
+
+    <string-array name="magnitude_array">
+        <item>All</item>
+        <item>0.0 to 2.9</item>
+        <item>3.0 to 5.9</item>
+        <item>6.0 to 8.9</item>
+        <item>9.0 +</item>
+    </string-array>
+    <string-array name="depth_array">
+        <item>All</item>
+        <item>Shallowest (0–70)</item>
+        <item>Intermediate (70–300)</item>
+        <item>Deepest (300–700)</item>
+    </string-array>
+    <string-array name="location_array">
+        <item>All</item>
+        <item>Northerly</item>
+        <item>Southerly</item>
+        <item>Westerly</item>
+        <item>Easterly</item>
+    </string-array>
 </resources>
