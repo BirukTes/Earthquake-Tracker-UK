@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -109,6 +110,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 filterConstraintLayout.animate().translationY(0);
             }
         });
+
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new GetLocationListAndSetData().execute(quakesBgsUrlSource);
+
+                handler.postDelayed(this, 5 * 60 * 1000); // every 5 minutes
+                /* your code here */
+            }
+        }, 5 * 60 * 1000); // first run after 5 minutes
     }
 
     private void initialiseSortButtons() {
