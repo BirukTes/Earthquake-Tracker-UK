@@ -20,7 +20,7 @@
     <string name="apply">Apply</string>
     <string name="to_date">To Date</string>
     <string name="to">to</string>
-    <string name="none">None</string>
+    <string name="none">None (Date)</string>
     <string name="date_range">Date Range</string>
     <string name="clear">Clear</string>
     <string name="magnitude_asc">Magnitude (Asc)</string>

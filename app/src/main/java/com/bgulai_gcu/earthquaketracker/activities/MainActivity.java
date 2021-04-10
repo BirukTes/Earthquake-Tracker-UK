@@ -93,22 +93,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         filterConstraintLayout = findViewById(R.id.filterConstraintLayout);
 
         sortFloatingActionButton = findViewById(R.id.sortFloatingActionButton);
-        sortFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filterSortCardView.setVisibility(View.VISIBLE);
-                sortConstraintLayout.setVisibility(View.VISIBLE);
-                sortConstraintLayout.animate().translationY(0);
-            }
+        sortFloatingActionButton.setOnClickListener(v -> {
+            filterSortCardView.setVisibility(View.VISIBLE);
+            sortConstraintLayout.setVisibility(View.VISIBLE);
+            sortConstraintLayout.animate().translationY(0);
         });
         filterFloatingActionButton = findViewById(R.id.filterFloatingActionButton);
-        filterFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filterSortCardView.setVisibility(View.VISIBLE);
-                filterConstraintLayout.setVisibility(View.VISIBLE);
-                filterConstraintLayout.animate().translationY(0);
-            }
+        filterFloatingActionButton.setOnClickListener(v -> {
+            filterSortCardView.setVisibility(View.VISIBLE);
+            filterConstraintLayout.setVisibility(View.VISIBLE);
+            filterConstraintLayout.animate().translationY(0);
         });
 
 
@@ -151,7 +145,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         sortRG = findViewById(R.id.sortRG);
 
         sortRG.setOnCheckedChangeListener((group, checkedId) -> {
-            sortRecyclerList(checkedId, locationModelListFiltered, false);
+            if (locationModelListFiltered == null || locationModelList == null) {
+                sortRecyclerList(checkedId, new ArrayList<>(), false);
+            } else {
+                sortRecyclerList(checkedId, locationModelListFiltered, false);
+            }
 
             sortConstraintLayout.animate()
                     .translationY(-sortConstraintLayout.getHeight())
@@ -170,19 +168,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<LocationModel> locationModelArrayList = new ArrayList<>();
         switch (checkedId) {
             case R.id.sortByNone:
-                locationModelArrayList = new ArrayList<>(locationModelListLocal); // Take a copy, not reference!!
-                break;
-            case R.id.sortByMagnitude:
                 LocationModel[] locationModels = new LocationModel[locationModelListLocal.size()];
                 locationModels = locationModelListLocal.toArray(locationModels);
-                Arrays.sort(locationModels, LocationModel.magnitudeComparator);
+                Arrays.sort(locationModels, LocationModel.dateComparator);
                 locationModelArrayList = new ArrayList<>(Arrays.asList(locationModels));
                 break;
-            case R.id.sortByDepth:
+            case R.id.sortByMagnitude:
                 LocationModel[] locationModels1 = new LocationModel[locationModelListLocal.size()];
                 locationModels1 = locationModelListLocal.toArray(locationModels1);
-                Arrays.sort(locationModels1, LocationModel.depthComparator);
+                Arrays.sort(locationModels1, LocationModel.magnitudeComparator);
                 locationModelArrayList = new ArrayList<>(Arrays.asList(locationModels1));
+                break;
+            case R.id.sortByDepth:
+                LocationModel[] locationModels2 = new LocationModel[locationModelListLocal.size()];
+                locationModels2 = locationModelListLocal.toArray(locationModels2);
+                Arrays.sort(locationModels2, LocationModel.depthComparator);
+                locationModelArrayList = new ArrayList<>(Arrays.asList(locationModels2));
                 break;
         }
 
@@ -259,7 +260,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         magSpinner.setSelection(0);
                         depthSpinner.setSelection(0);
                         locationSpinner.setSelection(0);
-
+                        date_minimal = null;
+                        date_maximal = null;
                         runFilterAndSort(locationModelList);
 
                         filterConstraintLayout.animate().setListener(null);

@@ -1,27 +1,57 @@
 @startuml
 class com.bgulai_gcu.earthquaketracker.activities.MainActivity {
-- TextView mTextView
+- Context appMainContext
+- ClusterManager<LocationModel> clusterManager
 - RecyclerView recyclerView
 - LocationCardAdapter locationCardAdapter
 - ArrayList<LocationModel> locationModelList
+- ArrayList<LocationModel> locationModelListFiltered
 - CardView filterSortCardView
 - ConstraintLayout sortConstraintLayout
+- RadioGroup sortRG
+- RadioButton sortByNone
+- RadioButton sortByMagnitude
+- RadioButton sortByDepth
 - ConstraintLayout filterConstraintLayout
+- Button filterApplyButton
+- Button filterCancelButton
+- Button fromDateTextButton
+- Button toDateTextButton
+- String fromDateMinAvailableDate
+- String toDateMaxAvailableDate
+- Spinner magSpinner
+- Spinner depthSpinner
+- Spinner locationSpinner
+- Calendar calendar
+- Locale id
+- SimpleDateFormat simpleDateFormat
+- Date date_minimal
+- Date date_maximal
 - FloatingActionButton sortFloatingActionButton
 - FloatingActionButton filterFloatingActionButton
-- Button filterApplyButton
-- RadioGroup sortRG
 # void onCreate(Bundle)
+- void initialiseSortButtons()
+- ArrayList<LocationModel> sortRecyclerList(int,ArrayList<LocationModel>,boolean)
 - void initialiseRecyclerViewValues(ArrayList<LocationModel>)
+- void initialiseFilterButtons()
+- int getDialogTheme()
++ void onItemSelected(AdapterView<?>,View,int,long)
++ void onNothingSelected(AdapterView<?>)
+- void addSelectionToFilterSelected(int,ArrayList<String>)
+- void runFilterAndSort(ArrayList<LocationModel>)
 }
 class com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData {
 # ArrayList<LocationModel> doInBackground(String)
 # void onPostExecute(ArrayList<LocationModel>)
 }
 class com.bgulai_gcu.earthquaketracker.activities.MapsFragment {
+- {static} GoogleMap googleMap
+- MapsFragment mapsFragment
+- {static} ClusterManager<LocationModel> clusterManager
 - OnMapReadyCallback callback
 + View onCreateView(LayoutInflater,ViewGroup,Bundle)
 + void onViewCreated(View,Bundle)
++ {static} void runClusterManager(Context,ArrayList<LocationModel>)
 }
 class com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity {
 - {static} int SPLASH_SCREEN
@@ -33,6 +63,7 @@ class com.bgulai_gcu.earthquaketracker.activities.FullscreenActivity {
 }
 
 
+com.bgulai_gcu.earthquaketracker.activities.OnItemSelectedListener <|.. com.bgulai_gcu.earthquaketracker.activities.MainActivity
 androidx.appcompat.app.AppCompatActivity <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity
 com.bgulai_gcu.earthquaketracker.activities.MainActivity +.. com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData
 com.bgulai_gcu.earthquaketracker.activities.AsyncTask <|-- com.bgulai_gcu.earthquaketracker.activities.MainActivity.GetLocationListAndSetData

@@ -8,8 +8,9 @@ class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter {
 }
 class com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder {
 - TextView location
-- Context locationViewContext
 ~ void setDetails(LocationModel)
+- void showDialog()
+- void showLocationDetails()
 }
 class com.bgulai_gcu.earthquaketracker.generalClasses.LocationXmlParser {
 - {static} String ns
@@ -18,35 +19,76 @@ class com.bgulai_gcu.earthquaketracker.generalClasses.LocationXmlParser {
 - LocationModel readItem(XmlPullParser)
 - String[] readDescription(XmlPullParser)
 - String readLink(XmlPullParser)
-- String readDate(XmlPullParser)
-- String readLatitude(XmlPullParser)
-- String readLongitude(XmlPullParser)
+- Date readDate(XmlPullParser)
+- double readLatitude(XmlPullParser)
+- double readLongitude(XmlPullParser)
 - String readText(XmlPullParser)
 - void skip(XmlPullParser)
 }
 class com.bgulai_gcu.earthquaketracker.generalClasses.LocationModel {
 - String location
-- String dateTime
-- String magnitude
-- String depth
+- Date dateTime
+- double magnitude
+- double depth
 - String link
-- String geoLatitude
-- String geoLongitude
+- double geoLatitude
+- double geoLongitude
+- String title
+- String snippet
+- LatLng position
++ {static} Comparator<LocationModel> magnitudeComparator
++ {static} Comparator<LocationModel> depthComparator
 + int magnitudeColour(double)
 + String getLocation()
 + void setLocation(String)
-+ String getDateTime()
-+ void setDateTime(String)
-+ String getMagnitude()
-+ void setMagnitude(String)
-+ String getDepth()
-+ void setDepth(String)
++ Date getDateTime()
++ void setDateTime(Date)
++ double getMagnitude()
++ void setMagnitude(double)
++ double getDepth()
++ void setDepth(double)
 + String getLink()
 + void setLink(String)
-+ String getGeoLatitude()
-+ void setGeoLatitude(String)
-+ String getGeoLongitude()
-+ void setGeoLongitude(String)
++ double getGeoLatitude()
++ void setGeoLatitude(double)
++ double getGeoLongitude()
++ void setGeoLongitude(double)
++ {static} Comparator<LocationModel> getMagnitudeComparator()
++ {static} void setMagnitudeComparator(Comparator<LocationModel>)
++ {static} Comparator<LocationModel> getDepthComparator()
++ {static} void setDepthComparator(Comparator<LocationModel>)
++ LatLng getPosition()
++ String getTitle()
++ String getSnippet()
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.Filter {
++ {static} Integer INDEX_DATE
++ {static} Integer INDEX_MAGNITUDE
++ {static} Integer INDEX_DEPTH
++ {static} Integer INDEX_LOCATION
+- String name
+- List<String> values
+- List<String> selected
++ String getName()
++ void setName(String)
++ List<String> getValues()
++ void setValues(List<String>)
++ List<String> getSelected()
++ void setSelected(List<String>)
+}
+class com.bgulai_gcu.earthquaketracker.generalClasses.FilterManager {
+- {static} SimpleDateFormat format
++ {static} void initialisePrefs(ArrayList<String>,ArrayList<String>,ArrayList<String>,ArrayList<String>)
++ {static} void clearAll()
++ {static} ArrayList<LocationModel> filterList(ArrayList<LocationModel>)
+- {static} Date getBaseDate(Date)
+- {static} boolean magnitudeContains(List<String>,Double)
+- {static} boolean depthContains(List<String>,Double)
+- {static} boolean locationContains(List<String>,String[])
++ {static} String[] getFormattedLocationInDegreeDirections(double,double)
+}
+abstract class com.bgulai_gcu.earthquaketracker.generalClasses.FilterManager.Preferences {
++ {static} HashMap<Integer,Filter> filters
 }
 class com.bgulai_gcu.earthquaketracker.generalClasses.LoadXmlFromNetwork {
 + ArrayList<LocationModel> loadXml(String)
@@ -57,4 +99,6 @@ class com.bgulai_gcu.earthquaketracker.generalClasses.LoadXmlFromNetwork {
 com.bgulai_gcu.earthquaketracker.generalClasses.Adapter <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter
 com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter +.. com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
 com.bgulai_gcu.earthquaketracker.generalClasses.ViewHolder <|-- com.bgulai_gcu.earthquaketracker.generalClasses.LocationCardAdapter.LocationHolder
+com.google.maps.android.clustering.ClusterItem <|.. com.bgulai_gcu.earthquaketracker.generalClasses.LocationModel
+com.bgulai_gcu.earthquaketracker.generalClasses.FilterManager +.. com.bgulai_gcu.earthquaketracker.generalClasses.FilterManager.Preferences
 @enduml

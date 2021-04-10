@@ -34,6 +34,14 @@ public class LocationModel implements ClusterItem {
     private String snippet;
     private LatLng position;
 
+    public static Comparator<LocationModel> dateComparator = new Comparator<LocationModel>() {
+        @Override
+        public int compare(LocationModel o1, LocationModel o2) {
+            Date o1Mag = o1.getDateTime();
+            Date o2Mag = o2.getDateTime();
+            return o2Mag.compareTo(o1Mag); // Asc
+        }
+    };
     public static Comparator<LocationModel> magnitudeComparator = new Comparator<LocationModel>() {
         @Override
         public int compare(LocationModel o1, LocationModel o2) {
