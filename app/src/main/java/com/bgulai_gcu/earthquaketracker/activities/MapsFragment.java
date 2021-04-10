@@ -1,15 +1,14 @@
 package com.bgulai_gcu.earthquaketracker.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.bgulai_gcu.earthquaketracker.R;
 import com.bgulai_gcu.earthquaketracker.generalClasses.LocationModel;
@@ -18,12 +17,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
-import java.util.Objects;
-
+/**
+ * Created by Bereketab Gulai | s1827985
+ */
 public class MapsFragment extends Fragment {
     private static GoogleMap googleMap;
     private final MapsFragment mapsFragment = this;

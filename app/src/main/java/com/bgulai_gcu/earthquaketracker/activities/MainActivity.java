@@ -42,6 +42,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+
+/**
+ * Created by Bereketab Gulai | s1827985
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Context appMainContext = this;

@@ -2,6 +2,9 @@ package com.bgulai_gcu.earthquaketracker.generalClasses;
 
 import java.util.List;
 
+/**
+ * Created by Bereketab Gulai | s1827985
+ */
 public class Filter {
     public static Integer INDEX_DATE = 0;
     public static Integer INDEX_MAGNITUDE = 1;
