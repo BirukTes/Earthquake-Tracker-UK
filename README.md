@@ -1,3 +1,5 @@
+![full_logo (Custom)](https://user-images.githubusercontent.com/23151263/115998913-84d97300-a5e1-11eb-8974-a487773ac5c7.png)
+
 # Earthquake Tracker UK
 Earthquake Tracker for UK based on BGS's RSS feed
 
